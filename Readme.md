@@ -28,5 +28,5 @@ Or run the jupyter notebook cell by cell
 ## Members
 
 - [Bashar Jaan Khan](https://github.com/thishermit)
-- [Muneeb Khan](https://github.com/thishermit)
-- [Shameer](https://github.com/thishermit)
+- [Muneeb Khan](https://github.com/MuneebKhan-7)
+- [Shameer](https://github.com/syedshameersarwar)
