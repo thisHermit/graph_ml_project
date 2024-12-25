@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=graph_ml_job   # Optional: Set a job name
 #SBATCH --partition=gpu              # Specify the partition
-#SBATCH --G GTX500                     # Request 1 GPU
+#SBATCH --G GTX500  # -G V100:1        # Request 1 GPU
 #SBATCH --cpus-per-task=4            # Allocate 4 CPUs per task
 #SBATCH --mem-per-cpu=4000M          # Allocate 4000 MB of memory per CPU
 #SBATCH --time=02:00:00              # Set a time limit of 1 hour
