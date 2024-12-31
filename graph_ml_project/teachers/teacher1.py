@@ -14,7 +14,7 @@ import copy
 
 from torch_geometric.nn import TransformerConv, GCNConv, global_mean_pool
 
-from ..student.student import StudentModel
+from graph_ml_project.student.student import StudentModel
 
 # find device
 if torch.cuda.is_available(): # NVIDIA

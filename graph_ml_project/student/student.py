@@ -12,6 +12,7 @@ from torch_geometric.utils import to_scipy_sparse_matrix
 from torch.optim import AdamW
 import copy
 import statistics
+import os
 
 from torch_geometric.nn import TransformerConv, GCNConv, global_mean_pool
 
