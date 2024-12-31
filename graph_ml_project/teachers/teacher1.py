@@ -210,7 +210,7 @@ def main(filename = "best_model1.pt"):
     test_loss = evaluate(test_loader)
     print(f"Test Loss: {test_loss:.4f}")
 
-    kd()
+    kd(model, student_model)
 
 
 def kd(teacher_model, student_model):
