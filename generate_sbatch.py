@@ -30,8 +30,10 @@ def generate_slurm_script(teachers_path='graph_ml_project/teachers'):
         "#SBATCH --mail-type=BEGIN,END",
         "",
         "module load cuda/12.1.1",
-        "module load anaconda3",
-        "conda activate graph",  # Adjust if you need module load or other env commands
+        "module load miniforge3",
+        "# Source the conda script that sets up 'conda activate' in the current shell",
+        "source \"$(conda info --base)/etc/profile.d/conda.sh\"",
+        "conda activate graph",
         "",
         "",
         "case $SLURM_ARRAY_TASK_ID in",

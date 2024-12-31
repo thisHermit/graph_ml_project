@@ -6,11 +6,14 @@
 #SBATCH --mem-per-cpu=4000M
 #SBATCH --time=02:00:00
 #SBATCH --array=0-2
-#SBATCH --output=job_output_%A_%a.txt
+#SBATCH --output=logs/job_output_%A_%a.txt
 #SBATCH --mail-user=basharjaan.khan@stud.uni-goettingen.de
 #SBATCH --mail-type=BEGIN,END
 
 module load cuda/12.1.1
+module load miniforge3
+# Source the conda script that sets up 'conda activate' in the current shell
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate graph
 
 
