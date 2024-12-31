@@ -25,11 +25,12 @@ def generate_slurm_script(teachers_path='graph_ml_project/teachers'):
         "#SBATCH --mem-per-cpu=4000M",
         "#SBATCH --time=02:00:00",
         f"#SBATCH --array=0-{total_tasks}",
-        "#SBATCH --output=job_output_%A_%a.txt",
+        "#SBATCH --output=logs/job_output_%A_%a.txt",
         "#SBATCH --mail-user=basharjaan.khan@stud.uni-goettingen.de",
         "#SBATCH --mail-type=BEGIN,END",
         "",
         "module load cuda/12.1.1",
+        "module load anaconda3",
         "conda activate graph",  # Adjust if you need module load or other env commands
         "",
         "",
