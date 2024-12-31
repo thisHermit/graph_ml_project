@@ -29,6 +29,7 @@ def generate_slurm_script(teachers_path='graph_ml_project/teachers'):
         "#SBATCH --mail-user=basharjaan.khan@stud.uni-goettingen.de",
         "#SBATCH --mail-type=BEGIN,END",
         "",
+        "module load cuda/12.1.1",
         "conda activate graph",  # Adjust if you need module load or other env commands
         "",
         "",

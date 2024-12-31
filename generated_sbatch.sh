@@ -10,6 +10,7 @@
 #SBATCH --mail-user=basharjaan.khan@stud.uni-goettingen.de
 #SBATCH --mail-type=BEGIN,END
 
+module load cuda/12.1.1
 conda activate graph
 
 
