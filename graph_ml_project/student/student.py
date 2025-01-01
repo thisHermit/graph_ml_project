@@ -220,7 +220,7 @@ def baseline():
     print(model_reference)
 
     print("Metrics Reporting:")
-    for metric, metrics_list in metrics:
+    for metric, metrics_list in metrics.items():
         mean = statistics.mean(metrics_list)
         std_dev = statistics.stdev(metrics_list)
         print(f"{metric}: {mean} ± {std_dev}")
