@@ -10,3 +10,6 @@ conda install -y pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c 
 
 # 4) Install PyTorch Geometric (using conda channel 'pyg')
 conda install -y pyg -c pyg
+
+# 5) Install datasets
+ conda install -y conda-forge::ogb 
