@@ -879,9 +879,11 @@ def run_multiple_experiments(
         results.append(run_results)
 
         # Save intermediate results after each run
-        df = pd.DataFrame(results)
+        df = pd.DataFrame([run_results])
         # check if output file exists
         if os.path.exists(output_file):
+            with open(output_file, "a") as f:
+                f.write("\n")
             df.to_csv(output_file, index=False, mode="a", header=False)
         else:
             df.to_csv(output_file, index=False)
