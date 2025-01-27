@@ -1086,9 +1086,3 @@ if __name__ == "__main__":
 
     print(results_df.to_string(), flush=True)
     print("Experiments completed successfully!", flush=True)
-
-# srun --export=ALL --pty -p grete-h100 -G H100:1 --cpus-per-task=64 --ntasks=1 python gakd.py --teacher_knowledge_path /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS/teacher_results/teacher-knowledge.pt --epochs 1 --batch_size 128
-# srun --export=ALL --pty -p grete-h100 -G H100:1 --cpus-per-task=64 --ntasks=1 python gakd.py --teacher_knowledge_path /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS/teacher_results/teacher-knowledge.pt --student_virtual_node false  --epochs 1 --batch_size 128
-
-# srun --export=ALL --pty -p grete-h100 -G H100:1 --cpus-per-task=64 --ntasks=1 python gakd.py --teacher_knowledge_path /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS/teacher_results/teacher-knowledge.pt --epochs 1 --train_discriminator_embeddings false
-# srun --export=ALL --pty -p grete-h100 -G H100:1 --cpus-per-task=64 --ntasks=1 python gakd.py --teacher_knowledge_path /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS/teacher_results/teacher-knowledge.pt --epochs 1 --train_discriminator_logits false
