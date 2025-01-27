@@ -90,4 +90,4 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
     embeddings['ptr']: (num_graphs + 1) # Cumulative pointer of the nodes in each graph
     ```
 - These embeddings are used for downstream knowledge distillation tasks.
-- Our teacher knowledge on `OGBG-MolPCBA` dataset can be downloaded from [here](https://drive.google.com).
+- Our teacher knowledge on `OGBG-MolPCBA` dataset can be downloaded from [here](https://drive.google.com/file/d/1BHELWyQiAEWxcwOE0WsPrkK3N7xewSpW/view?usp=sharing).
