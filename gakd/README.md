@@ -1,9 +1,9 @@
-# Graph Adversarial Knowledge Distillation (GakD)
-We use Graph Adversarial Knowledge Distillation (GakD) to distill the knowledge from the teacher model to the student model. This framework is based on the paper [Compressing Deep Graph Neural Networks via
+# Graph Adversarial Knowledge Distillation (GAKD)
+We use Graph Adversarial Knowledge Distillation (GAKD) to distill the knowledge from the teacher model to the student model. This framework is based on the paper [Compressing Deep Graph Neural Networks via
 Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic idea is to have a discriminator that learns to distinguish between the teacher and student embeddings while the student tries to fool the discriminator.
 ![GakD](./imgs/gakd.png)
 
-- We reimplemented the GakD framework from [GraphGPS](https://github.com/MIRALab-USTC/GraphAKD/tree/main/graph-level) repository with better readability and configurability and used **GINE** model as the student. The official implementation uses **GCN** and **GIN** students.
+- We re-implemented the GAKD framework from [GraphGPS](https://github.com/MIRALab-USTC/GraphAKD/tree/main/graph-level) repository with better readability and configurability and used **GINE** model as the student. The official implementation uses **GCN** and **GIN** students.
 - Our experiments revolves around **full GAKD training**, and exploration of **Representation Identifier** and **Logits Identifier** effects in isolation.
 - All experiments are done on `OGBG-MolPCBA` dataset.
 
@@ -13,7 +13,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     - Environment setup as described in the root README.
 
 1. Create a new directory for the GakD experiments and `logs` directory inside it.
-2. Copy `baseline.py`, `gakd.py` and `SBATCH` scripts from `scripts/` directory to the new directory.
+2. Copy `baseline.py`, `gakd.py` and `SBATCH` scripts from [scripts/](./scripts/) directory to the new directory.
 3. Modify the `SBATCH` script parameters according to your enviornment. Make sure to set the correct `BASE_DIR` (for all experiments) and `TEACHER_KNOWLEDGE_PATH` with the path to the teacher knowledge file (for `gakd` experiments).
 4. The output of the experiments will be available in the `$BASE_DIR/results` directory with the name
     - `gine_results_<dataset_name>_<with/without>_virtual_node.csv` for `baseline` experiments.
@@ -33,7 +33,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     - Learning rate: `0.001`
     - Batch size: `32`
     - Epochs: `100`
-- Our training results for with `Virtual Node Aggregation (Parameters: 3717733)` experiment are summarized in following table:
+- Our training results for with `Virtual Node Aggregation (Parameters: 12585067)` experiment are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
     | 42  | 0.214042   | 0.214188   |
@@ -42,7 +42,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     | 45  | 0.195727   | 0.187560   |
     | 46  | 0.202787   | 0.192466   |
     | Mean ± Std | 0.206 ± 0.009 | 0.201 ± 0.010 |
-- Without `Virtual Node Aggregation (Parameters: 12585067)` experiment results are summarized in following table:
+- Without `Virtual Node Aggregation (Parameters: 3717733)` experiment results are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
     | 42  | 0.207008   | 0.205083   |
@@ -57,10 +57,10 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     #### Training Baseline Models
     ```
     # with Virtual Node Aggregation
-    sbatch scripts/gine-baseline-vn.sh
+    sbatch [scripts/gine-baseline-vn.sh](./scripts/gine-baseline-vn.sh)
 
     # without Virtual Node Aggregation
-    sbatch scripts/gine-baseline.sh
+    sbatch [scripts/gine-baseline.sh](./scripts/gine-baseline.sh)
     ```
 
 ## GAKD Experiments
@@ -84,17 +84,17 @@ We have some notable implementation differences compared to the original impleme
     |-----|------------|------------|------------|------------|
     | 42  | 50 | 0.213   | 0.2131   | ≈13 hours |
     | **42**  | **100** | **0.207**   | **0.205**   | **≈26 hours** |
-- We can see that the performance of the student model is comparitively better with `100` epochs as compared to student baseline. This applies that the student model is able to learn more from the teacher model.
+- We can see that the performance of the student model on `Test AP` is comparitively far better with `100` epochs as compared to student baseline. This applies that the student model is able to learn more from the teacher model.
 - Under the `50` epochs, the performance gain is little but still better than student baseline.
 - This reflects that we need more or equal epochs as of student baseline to get far better performance. With less epochs, we still can beat the baseline performance by small margin.
 - Ideally, GAN needs larger batch size and more epochs to converge. Here, we are using `32` batch size and `50` epochs due to memory and time constraints, and still we achieve better performance than student baseline.
 - To reproduce the results, submit the following commands via `sbatch`:
     ```
     # 50 epochs
-    sbatch scripts/gine-gakd-k5-wd0-drop0.5-epoch50.sh 
+    sbatch [scripts/gine-gakd-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh)
 
     # 100 epochs
-    sbatch scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh
+    sbatch [scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh](./scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh)
     ```
 
 ### Experiment #2: GAKD with Representation Identifier
@@ -106,11 +106,14 @@ We have some notable implementation differences compared to the original impleme
 - The results are summarized in following table:
     | Seed | Epochs | Valid AP   | Test AP    | Training Time |
     |-----|------------|------------|------------|------------|
-    | 42  | 50 | 0.207   | 0.205   | ≈13 hours |
- - Above results indicate that we can not achieve similar or better performance than student baseline just by training the `Representation Identifier` discriminators.
+    | **42**  | **50** | **0.215**   | **0.214**  | **≈13 hours** |
+ - Above results indicate that we can achieve similar or better performance than student baseline just by training the `Representation Identifier` discriminators.
+ - This contradicts the results of the paper where they mention that both Identifiers are required to achieve better performance.
+ - In our case, we achieve better `test AP` performance than student baseline as well as `full GAKD` training just by training the `Representation Identifier` discriminators under `50` epochs. 
+ - However, the limitation of only a single training run with `50` epochs makes it difficult to get a good estimate of the mean performance and we cannot say with confidence that `Representation Identifier` discriminators are better than `full GAKD` training in our scenario.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh
+    sbatch [scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh)
     ```
 
 ### Experiment #3: GAKD with Logits Identifier
@@ -122,12 +125,12 @@ We have some notable implementation differences compared to the original impleme
 - The results are summarized in following table:
     | Seed | Epochs | Valid AP   | Test AP    | Training Time |
     |-----|------------|------------|------------|------------|
-    | 42  | 50 | 0.207   | 0.205   | ≈13 hours |
+    | **42**  | **50** | **0.207**   | **0.205**   | **≈13 hours** |
 - Similar to `Experiment #2`, we can not achieve similar orbetter performance than student baseline just by training the `Logits Identifier` discriminators.
 - This concludes that we need to train both `Representation Identifier` and `Logits Identifier` discriminators of GAKD framework to achieve better performance.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh
+    sbatch [scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh)
     ```
 
 ### Experiment #4: Increased Discriminator Update Frequency (K=1)
@@ -139,15 +142,21 @@ We have some notable implementation differences compared to the original impleme
 - The results are summarized in following table:
     | Seed | Epochs | Valid AP   | Test AP    | Training Time |
     |-----|------------|------------|------------|------------|
-    | 42  | 50 | 0.207   | 0.205   | ≈13 hours |
+    | **42**  | **50** | **0.207**   | **0.205**   | **≈13 hours** |
 - Above results indicate that frequently updating the discriminators reduces the performance and we cannot reach the performance of student baseline.
 - This highlights that we need to train the discriminators less frequently to achieve better performance. Further experiments are needed to find the optimal discriminator update frequency.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch scripts/gine-gakd-k1-wd0.00001-dropout0.5-epoch50.sh
+    sbatch [scripts/gine-gakd-k1-wd0.00001-drop0.5-epoch50.sh](./scripts/gine-gakd-k1-wd0.00001-drop0.5-epoch50.sh)
     ```
 
-## Learnings and Future Work
+## Learnings
 - We are able to achieve better performance than student baseline with full GAKD training.
-- `Representation Identifier` and `Logits Identifier` discriminators might not provide better performance than student baseline when trained in isolation.
-- We need to train the discriminators less frequently to achieve better performance.
+- `Representation Identifier` and `Logits Identifier` discriminators are potentially able to provide better performance than student baseline as well as `full GAKD` training when trained in isolation.
+- We need to train the discriminators less frequently to achieve better performance (`K > 1)`.
+
+## Limitations and Future Work
+- We did not get an estimate of the `standard deviation` for the results due to time constraints. In future, we should run experiments with more runs and epochs to get a better estimate of the `mean` performance and `standard deviation`.
+- We need to explore more on the optimal discriminator update frequency.
+- We can try with larger batch size aligning with the original implementation.
+- We can also run experiments with `GINE with Virtual Node Aggregation` to see if adding virtual nodes helps in achieving better performance under GAKD framework.

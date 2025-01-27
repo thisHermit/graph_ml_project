@@ -29,9 +29,9 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
     git clone https://github.com/rampasek/GraphGPS.git
     ```
 
-2. Change files to support Embedding and Logits extraction for downstream tasks
- - Move `config_embedding.py` to `GraphGPS/graphgps/config` directory. This file contains the configuration for the embedding extraction script.
- - Replace `GraphGPS/graphgps/loader/master_loader.py` with `master_loader.py` from current directory. This file adds the logic to add Graph IDs and Node IDs to the `OGBG` datasets during the dataloading process. 
+2. Change following files to support Embedding and Logits extraction for downstream tasks:
+ - Move [`config_embedding.py`](./config_embedding.py) to `GraphGPS/graphgps/config` directory. This file contains the configuration for the embedding extraction script.
+ - Replace `GraphGPS/graphgps/loader/master_loader.py` with [`master_loader.py`](./master_loader.py) from current directory. This file adds the logic to add Graph IDs and Node IDs to the `OGBG` datasets during the dataloading process. 
     ```
     # Transform to add Graph IDs and Node IDs to the dataset
     class AddGraphIdTransform:
@@ -48,14 +48,14 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
             self.node_count += data.num_nodes
             return data
     ```
-3. Copy `embedding.py`, `merge.py`, `train_config.yaml`, and `embedding_config.yaml` to `GraphGPS/` directory.
+3. Copy [`embedding.py`](./embedding.py), [`merge.py`](./merge.py), [`train_config.yaml`](./train_config.yaml), [`scripts/*`](./scripts/) and [`embedding_config.yaml`](./embedding_config.yaml) to `GraphGPS/` directory.
 4. Create new directories called `teacher_results` and `logs` in `GraphGPS/` directory to store the results of the teacher model and embeddings.
 5. Change the `BASE_DIR` and `SBATCH` configurations  in `scripts/train.sh` and `scripts/embeddings.sh` and copy them to the `GraphGPS/` directory.
 
 
 ### Training the Teacher Model
 
-- Submit the `train.sh` script to train the teacher model using `sbatch train.sh`. It will approximately take `18` hours to complete.
+- Submit the [`scripts/train.sh`]() script to train the teacher model using `sbatch scripts/train.sh`. It will approximately take `18` hours to complete.
 - The script will run the training 3 times with seed `42`, `43`, and `44`. The results for each seed will be stored in `teacher_results/<SEED>` directory.
 - You can find the best performing model by looking at the `teacher_results/<SEED>/test/stats.json` file.
 - For our run, the best performing model was obtained with seed `44`.
