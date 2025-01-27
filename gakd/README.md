@@ -13,7 +13,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     - Environment setup as described in the root README.
 
 1. Create a new directory for the GakD experiments and `logs` directory inside it.
-2. Copy `baseline.py`, `gakd.py` and `SBATCH` scripts from [scripts/](./scripts/) directory to the new directory.
+2. Copy [`baseline.py`](./baseline.py), [`gakd.py`](./gakd.py) and `SBATCH` scripts from [`scripts/*`](./scripts/) directory to the new directory.
 3. Modify the `SBATCH` script parameters according to your enviornment. Make sure to set the correct `BASE_DIR` (for all experiments) and `TEACHER_KNOWLEDGE_PATH` with the path to the teacher knowledge file (for `gakd` experiments).
 4. The output of the experiments will be available in the `$BASE_DIR/results` directory with the name
     - `gine_results_<dataset_name>_<with/without>_virtual_node.csv` for `baseline` experiments.
@@ -113,7 +113,7 @@ We have some notable implementation differences compared to the original impleme
  - However, the limitation of only a single training run with `50` epochs makes it difficult to get a good estimate of the mean performance and we cannot say with confidence that `Representation Identifier` discriminators are better than `full GAKD` training in our scenario.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch [scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh)
+    sbatch scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh
     ```
 
 ### Experiment #3: GAKD with Logits Identifier
