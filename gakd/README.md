@@ -57,10 +57,10 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     #### Training Baseline Models
     ```
     # with Virtual Node Aggregation
-    sbatch [scripts/gine-baseline-vn.sh](./scripts/gine-baseline-vn.sh)
+    sbatch scripts/gine-baseline-vn.sh
 
     # without Virtual Node Aggregation
-    sbatch [scripts/gine-baseline.sh](./scripts/gine-baseline.sh)
+    sbatch scripts/gine-baseline.sh
     ```
 
 ## GAKD Experiments
@@ -91,10 +91,10 @@ We have some notable implementation differences compared to the original impleme
 - To reproduce the results, submit the following commands via `sbatch`:
     ```
     # 50 epochs
-    sbatch [scripts/gine-gakd-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-embeddings-k5-wd0-drop0.5-epoch50.sh)
+    sbatch scripts/gine-gakd-k5-wd0-drop0.5-epoch50.sh
 
     # 100 epochs
-    sbatch [scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh](./scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh)
+    sbatch scripts/gine-gakd-k5-wd0-drop0.5-epoch100.sh
     ```
 
 ### Experiment #2: GAKD with Representation Identifier
@@ -130,7 +130,7 @@ We have some notable implementation differences compared to the original impleme
 - This concludes that we need to train both `Representation Identifier` and `Logits Identifier` discriminators of GAKD framework to achieve better performance.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch [scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh](./scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh)
+    sbatch scripts/gine-gakd-logits-k5-wd0-drop0.5-epoch50.sh
     ```
 
 ### Experiment #4: Increased Discriminator Update Frequency (K=1)
@@ -147,7 +147,7 @@ We have some notable implementation differences compared to the original impleme
 - This highlights that we need to train the discriminators less frequently to achieve better performance. Further experiments are needed to find the optimal discriminator update frequency.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
-    sbatch [scripts/gine-gakd-k1-wd0.00001-drop0.5-epoch50.sh](./scripts/gine-gakd-k1-wd0.00001-drop0.5-epoch50.sh)
+    sbatch scripts/gine-gakd-k1-wd0.00001-drop0.5-epoch50.sh
     ```
 
 ## Learnings

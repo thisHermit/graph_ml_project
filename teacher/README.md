@@ -55,7 +55,7 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
 
 ### Training the Teacher Model
 
-- Submit the [`scripts/train.sh`]() script to train the teacher model using `sbatch scripts/train.sh`. It will approximately take `18` hours to complete.
+- Submit the `scripts/train.sh` script to train the teacher model using `sbatch scripts/train.sh`. It will approximately take `18` hours to complete.
 - The script will run the training 3 times with seed `42`, `43`, and `44`. The results for each seed will be stored in `teacher_results/<SEED>` directory.
 - You can find the best performing model by looking at the `teacher_results/<SEED>/test/stats.json` file.
 - For our run, the best performing model was obtained with seed `44`.
