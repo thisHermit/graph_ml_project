@@ -1,0 +1,125 @@
+GraphGymModule(
+  (model): GPSModel(
+    (encoder): FeatureEncoder(
+      (node_encoder): Concat2NodeEncoder(
+        (encoder1): AtomEncoder(
+          (atom_embedding_list): ModuleList(
+            (0): Embedding(119, 380)
+            (1): Embedding(5, 380)
+            (2-3): 2 x Embedding(12, 380)
+            (4): Embedding(10, 380)
+            (5-6): 2 x Embedding(6, 380)
+            (7-8): 2 x Embedding(2, 380)
+          )
+        )
+        (encoder2): RWSENodeEncoder(
+          (raw_norm): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pe_encoder): Linear(in_features=16, out_features=20, bias=True)
+        )
+      )
+      (edge_encoder): BondEncoder(
+        (bond_embedding_list): ModuleList(
+          (0): Embedding(5, 400)
+          (1): Embedding(6, 400)
+          (2): Embedding(2, 400)
+        )
+      )
+    )
+    (layers): Sequential(
+      (0): GPSLayer(
+        summary: dim_h=400, local_gnn_type=CustomGatedGCN, global_model_type=Transformer, heads=4
+        (local_model): GatedGCNLayer()
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=400, out_features=400, bias=True)
+        )
+        (norm1_local): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (norm1_attn): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (dropout_local): Dropout(p=0.2, inplace=False)
+        (dropout_attn): Dropout(p=0.2, inplace=False)
+        (ff_linear1): Linear(in_features=400, out_features=800, bias=True)
+        (ff_linear2): Linear(in_features=800, out_features=400, bias=True)
+        (act_fn_ff): ReLU()
+        (norm2): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (ff_dropout1): Dropout(p=0.2, inplace=False)
+        (ff_dropout2): Dropout(p=0.2, inplace=False)
+      )
+      (1): GPSLayer(
+        summary: dim_h=400, local_gnn_type=CustomGatedGCN, global_model_type=Transformer, heads=4
+        (local_model): GatedGCNLayer()
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=400, out_features=400, bias=True)
+        )
+        (norm1_local): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (norm1_attn): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (dropout_local): Dropout(p=0.2, inplace=False)
+        (dropout_attn): Dropout(p=0.2, inplace=False)
+        (ff_linear1): Linear(in_features=400, out_features=800, bias=True)
+        (ff_linear2): Linear(in_features=800, out_features=400, bias=True)
+        (act_fn_ff): ReLU()
+        (norm2): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (ff_dropout1): Dropout(p=0.2, inplace=False)
+        (ff_dropout2): Dropout(p=0.2, inplace=False)
+      )
+      (2): GPSLayer(
+        summary: dim_h=400, local_gnn_type=CustomGatedGCN, global_model_type=Transformer, heads=4
+        (local_model): GatedGCNLayer()
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=400, out_features=400, bias=True)
+        )
+        (norm1_local): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (norm1_attn): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (dropout_local): Dropout(p=0.2, inplace=False)
+        (dropout_attn): Dropout(p=0.2, inplace=False)
+        (ff_linear1): Linear(in_features=400, out_features=800, bias=True)
+        (ff_linear2): Linear(in_features=800, out_features=400, bias=True)
+        (act_fn_ff): ReLU()
+        (norm2): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (ff_dropout1): Dropout(p=0.2, inplace=False)
+        (ff_dropout2): Dropout(p=0.2, inplace=False)
+      )
+      (3): GPSLayer(
+        summary: dim_h=400, local_gnn_type=CustomGatedGCN, global_model_type=Transformer, heads=4
+        (local_model): GatedGCNLayer()
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=400, out_features=400, bias=True)
+        )
+        (norm1_local): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (norm1_attn): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (dropout_local): Dropout(p=0.2, inplace=False)
+        (dropout_attn): Dropout(p=0.2, inplace=False)
+        (ff_linear1): Linear(in_features=400, out_features=800, bias=True)
+        (ff_linear2): Linear(in_features=800, out_features=400, bias=True)
+        (act_fn_ff): ReLU()
+        (norm2): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (ff_dropout1): Dropout(p=0.2, inplace=False)
+        (ff_dropout2): Dropout(p=0.2, inplace=False)
+      )
+      (4): GPSLayer(
+        summary: dim_h=400, local_gnn_type=CustomGatedGCN, global_model_type=Transformer, heads=4
+        (local_model): GatedGCNLayer()
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=400, out_features=400, bias=True)
+        )
+        (norm1_local): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (norm1_attn): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (dropout_local): Dropout(p=0.2, inplace=False)
+        (dropout_attn): Dropout(p=0.2, inplace=False)
+        (ff_linear1): Linear(in_features=400, out_features=800, bias=True)
+        (ff_linear2): Linear(in_features=800, out_features=400, bias=True)
+        (act_fn_ff): ReLU()
+        (norm2): BatchNorm1d(400, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (ff_dropout1): Dropout(p=0.2, inplace=False)
+        (ff_dropout2): Dropout(p=0.2, inplace=False)
+      )
+    )
+    (post_mp): GNNGraphHead(
+      (layer_post_mp): MLP(
+        (model): Sequential(
+          (0): Linear(
+            (model): Linear(400, 128, bias=True)
+          )
+        )
+      )
+    )
+  )
+)
