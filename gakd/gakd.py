@@ -818,6 +818,7 @@ def run_multiple_experiments(
     discriminator_optimizer_lr=1e-2,
     discriminator_optimizer_weight_decay=5e-4,
     batch_size=32,
+    seed=42,
     num_workers=4,
     discriminator_update_freq=5,
     epochs=100,
@@ -833,7 +834,6 @@ def run_multiple_experiments(
     metric = "ap" if dataset_name == "ogbg-molpcba" else "rocauc"
     for run in range(n_runs):
         print(f"\nStarting Run {run + 1}/{n_runs}", flush=True)
-        seed = 42 + run
         trainer = GAKD_trainer(
             student_model_args=student_model_args,
             teacher_knowledge_path=teacher_knowledge_path,
@@ -1045,6 +1045,12 @@ if __name__ == "__main__":
         default=None,
         help="Path to the output file",
     )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed",
+    )
 
     args = parser.parse_args()
     virtual_node = args.student_virtual_node.lower() == "true"
@@ -1084,6 +1090,7 @@ if __name__ == "__main__":
         train_discriminator_logits=args.train_discriminator_logits,
         train_discriminator_embeddings=args.train_discriminator_embeddings,
         student_model_args=student_args,
+        seed=args.seed,
     )
 
     print(results_df.to_string(), flush=True)
