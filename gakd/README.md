@@ -167,4 +167,5 @@ We have some notable training differences compared to the original implementatio
 - We need to explore more on the **optimal discriminator update frequency (`K`)**.
 - We can try with **larger batch size** aligning with the original implementation.
 - We can also run experiments with `GINE with Virtual Node Aggregation` to see if adding virtual nodes helps in achieving better performance under **GAKD framework**.
+- Current training time is exceptionally high and debugging is required to find the bottleneck.
 - We can do **tSNE** plots of baseline, student and teacher embeddings and compare the **Silhouette scores** to see if the student embeddings are able to capture the teacher embeddings.
