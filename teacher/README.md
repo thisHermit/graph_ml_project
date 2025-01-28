@@ -22,7 +22,7 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
 ### Setup
 
   - Pre-requisite
-    - Environment setup as described in the root README.
+    - `GML` Environment setup as described in the root [README.md](../README.md).
 
 1. Clone the GraphGPS repository 
     ```bash

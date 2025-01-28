@@ -451,11 +451,11 @@ class GAKD_trainer:
         new_post = self.teacher_ptr[1:]
         # Map graph ids of each node in batch to training set graph's indices
         # For e,g
-        # new_pre, new_post = [0, 3, 6,.. 12], [3, 6, 9,.. 15], len(new_pre) = len(new_post) = 10 + 1 (10 is the number of graphs in training set)
+        # new_pre, new_post = [0, 3, 6,.. 12], [3, 6, 9,.. 15], len(new_pre) = len(new_post) = 10 (10 is the number of graphs in training set)
         # batch.batch = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4] <- zero-indexed graph ids for each node in batch
         # assumed true graph ids are [4, 4, 7, 7, 10, 10, 13, 13, 16, 16]
         # self._train_ids = [2, 4, 5, 7, 8, 10, 11, 13, 14, 16] <- zero-indexed graph ids for each node in training set
-        # batch_graph_idx = [1, 3, 5, 7, 9] <- indices of the graphs included in the batch,
+        # batch_graph_idx = [1, 3, 5, 7, 9] <- integer index of the graphs in _train_ids that are included in the current batch,
         #                                      used to extract the node indices of each graph included in the batch from batch_pre, batch_post
         # batch_pre, batch_post = selected from new_pre, new_post for only the graphs included in the batch using batch_graph_idx
         new_ids = [

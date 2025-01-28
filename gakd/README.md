@@ -10,7 +10,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
 ## Setup
 
 - Pre-requisite
-    - Environment setup as described in the root README.
+    - `GML` Environment setup as described in the root [README.md](../README.md).
 
 1. Create a new directory for the GakD experiments and `logs` directory inside it.
 2. Copy [`baseline.py`](./baseline.py), [`gakd.py`](./gakd.py) and `SBATCH` scripts from [`scripts/*`](./scripts/) directory to the new directory.
@@ -21,7 +21,8 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
    
 
 ## Student Baseline
-- We use `GINE` model as the student baseline. The training script for the baseline models is `baseline.py`.
+- We use `GINE` model as the student baseline. The training script for the baseline models is `baseline.py`. 
+- We used `Atom` and `Bond` Encoders for encoding node and bond features.
 - We trained the baseline with and without `Virtual Node Aggregation`.
 - The rest of the parameters are same for both experiments:
     - Number of runs: `5`
@@ -33,7 +34,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     - Learning rate: `0.001`
     - Batch size: `32`
     - Epochs: `100`
-- Our training results for with `Virtual Node Aggregation (Parameters: 12585067)` experiment are summarized in following table:
+- Our training results for `With Virtual Node Aggregation (Parameters: 12585067)` experiment are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
     | 42  | 0.214042   | 0.214188   |
@@ -42,7 +43,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     | 45  | 0.195727   | 0.187560   |
     | 46  | 0.202787   | 0.192466   |
     | Mean ± Std | 0.206 ± 0.009 | 0.201 ± 0.010 |
-- Without `Virtual Node Aggregation (Parameters: 3717733)` experiment results are summarized in following table:
+- `Without Virtual Node Aggregation (Parameters: 3717733)` experiment results are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
     | 42  | 0.207008   | 0.205083   |
