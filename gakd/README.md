@@ -147,7 +147,7 @@ We have some notable training differences compared to the original implementatio
 - The results are summarized in following table:
     | Seed | Runs | Epochs | Valid AP   | Test AP    | Training Time |
     |-----|------------|------------|------------|------------|------------|
-    | **42**  | **1** | **50** | **0.1382**   | **0.1412**   | **≈13 hours** |
+    | 42  | 1 | 50 | 0.1382   | 0.1412   | ≈13 hours |
 - Above results indicate that frequently updating the discriminators penalizes the performance and we cannot reach the performance of student baseline.
 - This highlights that we need to train the discriminators less frequently to achieve better performance. 
 - Further experiments are needed to find the optimal discriminator update frequency.
