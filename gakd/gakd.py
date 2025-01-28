@@ -762,10 +762,12 @@ class GAKD_trainer:
                 if valid_ap > best_valid_ap:
                     best_valid_ap = valid_ap
                     os.makedirs(f"{base_dir}/models", exist_ok=True)
+                    model_name = f"gine_student_kd_{self.dataset_name}_{time.strftime('%Y-%m-%d_%H-%M-%S')}_epoch_{epoch+1}_valid_ap_{valid_ap:.4f}_k{self.discriminator_update_freq}_wd{self.student_weight_decay}_drop{self.student_model_args["dropout"]}_vn{self.student_model_args["virtual_node"]}.pt"
                     torch.save(
                         self.student_model.state_dict(),
-                        f"{base_dir}/models/gine_student_kd_{self.dataset_name}_{time.strftime('%Y-%m-%d_%H-%M-%S')}.pt",
+                        f"{base_dir}/models/{model_name}",
                     )
+                    print(f"Saved model: {model_name}", flush=True)
 
     def evaluate(self, split="valid"):
         """
