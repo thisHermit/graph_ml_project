@@ -28,4 +28,4 @@ echo "==========================================="
 export PYTHONUNBUFFERED=TRUE
 cd $BASE_DIR
 # results will be available in $BASE_DIR/results
-python gakd.py --teacher_knowledge_path $TEACHER_KNOWLEDGE_PATH --epochs 50 --batch_size 32 --n_runs 1 --student_virtual_node false --student_optimizer_weight_decay 0 --student_dropout 0.5 --discriminator_update_freq 5 --train_discriminator_logits false
+python gakd.py --teacher_knowledge_path $TEACHER_KNOWLEDGE_PATH --epochs 50 --batch_size 32 --n_runs 2 --student_virtual_node false --student_optimizer_weight_decay 0 --student_dropout 0.5 --discriminator_update_freq 5 --train_discriminator_logits false

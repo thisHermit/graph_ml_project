@@ -54,7 +54,7 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
     | **Mean ± Std** | **0.207 ± 0.003** | **0.205 ± 0.002** |
 - We can see that the `Virtual Node Aggregation` does not improve the performance of the student model on average.
 - On the basis of average performance, we selected the models without the `Virtual Node Aggregation` as the baseline model. 
-- The best performing model on `Test AP` in that class is with seed `46`. We will consider this model as the baseline model for the rest of the experiments.
+- The best performing model on `Test AP` in that class is with seed `46` (AP: `0.208`). We will consider this model as the baseline model for the rest of the experiments.
     #### Training Baseline Models
     ```
     # with Virtual Node Aggregation
@@ -68,27 +68,30 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
 ### Implementation Highlights
 We have some notable implementation differences compared to the original implementation:
 - We use `GINE` model as the student model.
+- Our teacher model is based on `GraphGPS` model configuration for `OGBG-MolPCBA` dataset.
 - Their implementation which uses `GCN` and `GIN` students has a very large `Embedding dimension (1024)`, whereas we use `400` for `GINE`.
 - Their batch size for `OGBG-MolPCBA` dataset is `512`, whereas we use `32` because of GPU memory constraints. 
 - Their default discriminator update frequency (`K` in paper, `Section C.1`) is `1` (update on each iteration), whereas we use `5` (update every 5 iterations) for `OGBG-MolPCBA` dataset. They did not mention the reason for this choice and `K=5` performed better as compared to `K=1` for our initial experiments.
-- We only execute a single run `50` epochs for all experiements (except one) due to time constraints as each epoch takes around `30` minutes to complete. Due to this, we did not get a good estimate of the `standard deviation` for the results.
+- We execute `2 runs` for most experiments having `50` epochs. For an experiment having `100` epochs, we execute `1 run` due to time constraints. So for single run experiments, we cannot get an estimate of the `standard deviation` for the results.
 
 ### Experiment #1: GAKD full without Virtual Node Aggregation
-- We did two experiments on full GAKD, one with `50` epochs and one with `100` epochs.
+- We did two experiments on full GAKD, one with `50` epochs with `2 runs` and one with `100` epochs with a single run.
 - The parameters for students are the same as the baseline model.
 - The parameters for discriminators are:
     - Learning rate: `0.01`
     - Weight decay: `0.0005`
     - Discriminator update frequency (K): `5`
 - The results are summarized in following table:
-    | Seed | Epochs | Valid AP   | Test AP    | Training Time |
-    |-----|------------|------------|------------|------------|
-    | 42  | 50 | 0.213   | 0.2131   | ≈13 hours |
-    | **42***  | **100** | **0.207**   | **0.205**   | **≈26 hours** |
-- We can see that the performance of the student model on `Test AP` is comparitively far better with `100` epochs as compared to student baseline. This applies that the student model is able to learn more from the teacher model.
-- Under the `50` epochs, the performance gain is little but still better than student baseline.
-- This reflects that we need more or equal epochs as of student baseline to get far better performance. With less epochs, we still can beat the baseline performance by small margin.
+    | Seed | Runs | Epochs | Valid AP   | Test AP    | Training Time |
+    |-----|------------|------------|------------|------------|------------|
+    | 42  | 2 | 50 | 0.213   | 0.2131   | ≈26 hours |
+    | **42***  | **1** | **100** | **0.219**   | **0.219**   | **≈26 hours** |
+- We can see that the performance of the student model on `Test AP` is best with `100` epochs as compared to student baseline. 
+- Under the `50` epochs, the performance gain is a little less as compared to `100` epochs but still better than student baseline.
+- This applies that the student model is able to learn more from the teacher model.
+- With lesser epochs (i.e. `50`), we still can beat the baseline performance by small margin.
 - Ideally, GAN needs larger batch size and more epochs to converge. Here, we are using `32` batch size and `50` epochs due to memory and time constraints, and still we achieve better performance than student baseline.
+- Further experiments with larger batch size and more epochs can provide a clearer picture of the performance of the GAKD framework.
 - To reproduce the results, submit the following commands via `sbatch`:
     ```
     # 50 epochs
@@ -105,9 +108,9 @@ We have some notable implementation differences compared to the original impleme
     - Weight decay: `0.0005`
     - Discriminator update frequency (K): `5`
 - The results are summarized in following table:
-    | Seed | Epochs | Valid AP   | Test AP    | Training Time |
-    |-----|------------|------------|------------|------------|
-    | **42**  | **50** | **0.215**   | **0.214**  | **≈13 hours** |
+    | Seed | Runs | Epochs | Valid AP   | Test AP    | Training Time |
+    |-----|------------|------------|------------|------------|------------|
+    | **42**  | **2** | **50** | **0.215**   | **0.214**  | **≈13 hours** |
  - Above results indicate that we can achieve similar or better performance than student baseline just by training the `Representation Identifier` discriminators.
  - This contradicts the results of the paper where they mention that both Identifiers are required to achieve better performance.
  - In our case, we achieve better `test AP` performance than student baseline as well as `full GAKD` training just by training the `Representation Identifier` discriminators under `50` epochs. 
@@ -124,9 +127,9 @@ We have some notable implementation differences compared to the original impleme
     - Weight decay: `0.0005`
     - Discriminator update frequency (K): `5`
 - The results are summarized in following table:
-    | Seed | Epochs | Valid AP   | Test AP    | Training Time |
-    |-----|------------|------------|------------|------------|
-    | **42**  | **50** | **0.207**   | **0.205**   | **≈13 hours** |
+    | Seed | Runs | Epochs | Valid AP   | Test AP    | Training Time |
+    |-----|------------|------------|------------|------------|------------|
+    | **42**  | **2** | **50** | **0.207**   | **0.205**   | **≈13 hours** |
 - Similar to `Experiment #2`, we can not achieve similar orbetter performance than student baseline just by training the `Logits Identifier` discriminators.
 - This concludes that we need to train both `Representation Identifier` and `Logits Identifier` discriminators of GAKD framework to achieve better performance.
 - To reproduce the results, submit the following command via `sbatch`:
@@ -135,16 +138,17 @@ We have some notable implementation differences compared to the original impleme
     ```
 
 ### Experiment #4: Increased Discriminator Update Frequency (K=1)
-- We did one experiment with `50` epoch where we trained full GAKD with increased discriminator update frequency (K=1).
+- We did one experiment with `50` epochs where we trained full GAKD with increased discriminator update frequency (K=1). 
+- We wanted to see if the performance of the student model is enhanced by training the discriminators more frequently.
 - The parameters for discriminators are:
     - Learning rate: `0.01`
     - Weight decay: `0.0005`
     - Discriminator update frequency (K): `1`
 - The results are summarized in following table:
-    | Seed | Epochs | Valid AP   | Test AP    | Training Time |
-    |-----|------------|------------|------------|------------|
-    | **42**  | **50** | **0.207**   | **0.205**   | **≈13 hours** |
-- Above results indicate that frequently updating the discriminators reduces the performance and we cannot reach the performance of student baseline.
+    | Seed | Runs | Epochs | Valid AP   | Test AP    | Training Time |
+    |-----|------------|------------|------------|------------|------------|
+    | **42**  | **1** | **50** | **0.1382**   | **0.1412**   | **≈13 hours** |
+- Above results indicate that frequently updating the discriminators penalizes the performance and we cannot reach the performance of student baseline.
 - This highlights that we need to train the discriminators less frequently to achieve better performance. Further experiments are needed to find the optimal discriminator update frequency.
 - To reproduce the results, submit the following command via `sbatch`:
     ```
@@ -157,7 +161,7 @@ We have some notable implementation differences compared to the original impleme
 - We need to train the discriminators less frequently to achieve better performance (`K > 1)`.
 
 ## Limitations and Future Work
-- We did not get an estimate of the `standard deviation` for the results due to time constraints. In future, we should run experiments with more runs and epochs to get a better estimate of the `mean` performance and `standard deviation`.
-- We need to explore more on the optimal discriminator update frequency.
+- We did not get an estimate of the `standard deviation` for some experiments due to time constraints. In future, we should run experiments with more runs and epochs to get a better estimate of the `mean` performance and `standard deviation`.
+- We need to explore more on the optimal discriminator update frequency (`K`).
 - We can try with larger batch size aligning with the original implementation.
 - We can also run experiments with `GINE with Virtual Node Aggregation` to see if adding virtual nodes helps in achieving better performance under GAKD framework.
