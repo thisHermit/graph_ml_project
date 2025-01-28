@@ -451,11 +451,11 @@ class GAKD_trainer:
         new_post = self.teacher_ptr[1:]
         # Map graph ids of each node in batch to training set graph's indices
         # For e,g
-        # new_pre, new_post = [0, 3, 6,.. 12], [3, 6, 9,.. 15], len(new_pre) = len(new_post) = 10 + 1 (10 is the number of graphs in training set)
+        # new_pre, new_post = [0, 3, 6,.. 12], [3, 6, 9,.. 15], len(new_pre) = len(new_post) = 10 (10 is the number of graphs in training set)
         # batch.batch = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4] <- zero-indexed graph ids for each node in batch
         # assumed true graph ids are [4, 4, 7, 7, 10, 10, 13, 13, 16, 16]
         # self._train_ids = [2, 4, 5, 7, 8, 10, 11, 13, 14, 16] <- zero-indexed graph ids for each node in training set
-        # batch_graph_idx = [1, 3, 5, 7, 9] <- indices of the graphs included in the batch,
+        # batch_graph_idx = [1, 3, 5, 7, 9] <- integer index of the graphs in _train_ids that are included in the current batch,
         #                                      used to extract the node indices of each graph included in the batch from batch_pre, batch_post
         # batch_pre, batch_post = selected from new_pre, new_post for only the graphs included in the batch using batch_graph_idx
         new_ids = [
@@ -762,10 +762,12 @@ class GAKD_trainer:
                 if valid_ap > best_valid_ap:
                     best_valid_ap = valid_ap
                     os.makedirs(f"{base_dir}/models", exist_ok=True)
+                    model_name = f"gine_student_kd_{self.dataset_name}_{time.strftime('%Y-%m-%d_%H-%M-%S')}_epoch_{epoch+1}_valid_ap_{valid_ap:.4f}_k{self.discriminator_update_freq}_wd{self.student_weight_decay}_drop{self.student_model_args["dropout"]}_vn{self.student_model_args["virtual_node"]}.pt"
                     torch.save(
                         self.student_model.state_dict(),
-                        f"{base_dir}/models/gine_student_kd_{self.dataset_name}_{time.strftime('%Y-%m-%d_%H-%M-%S')}.pt",
+                        f"{base_dir}/models/{model_name}",
                     )
+                    print(f"Saved model: {model_name}", flush=True)
 
     def evaluate(self, split="valid"):
         """
@@ -818,6 +820,7 @@ def run_multiple_experiments(
     discriminator_optimizer_lr=1e-2,
     discriminator_optimizer_weight_decay=5e-4,
     batch_size=32,
+    seed=42,
     num_workers=4,
     discriminator_update_freq=5,
     epochs=100,
@@ -833,7 +836,6 @@ def run_multiple_experiments(
     metric = "ap" if dataset_name == "ogbg-molpcba" else "rocauc"
     for run in range(n_runs):
         print(f"\nStarting Run {run + 1}/{n_runs}", flush=True)
-        seed = 42 + run
         trainer = GAKD_trainer(
             student_model_args=student_model_args,
             teacher_knowledge_path=teacher_knowledge_path,
@@ -879,9 +881,11 @@ def run_multiple_experiments(
         results.append(run_results)
 
         # Save intermediate results after each run
-        df = pd.DataFrame(results)
+        df = pd.DataFrame([run_results])
         # check if output file exists
         if os.path.exists(output_file):
+            with open(output_file, "a") as f:
+                f.write("\n")
             df.to_csv(output_file, index=False, mode="a", header=False)
         else:
             df.to_csv(output_file, index=False)
@@ -1043,6 +1047,12 @@ if __name__ == "__main__":
         default=None,
         help="Path to the output file",
     )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed",
+    )
 
     args = parser.parse_args()
     virtual_node = args.student_virtual_node.lower() == "true"
@@ -1082,6 +1092,7 @@ if __name__ == "__main__":
         train_discriminator_logits=args.train_discriminator_logits,
         train_discriminator_embeddings=args.train_discriminator_embeddings,
         student_model_args=student_args,
+        seed=args.seed,
     )
 
     print(results_df.to_string(), flush=True)

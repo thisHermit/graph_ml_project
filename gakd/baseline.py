@@ -366,9 +366,10 @@ class GINETrainer:
                 if valid_ap > best_valid_ap:
                     best_valid_ap = valid_ap
                     os.makedirs(f"{base_dir}/models", exist_ok=True)
+                    model_name = f"gine_model_{self.dataset_name}_virtual_node_{self.virtual_node}_train_vn_eps_{self.train_vn_eps}_vn_eps_{self.vn_eps}.pt"
                     torch.save(
                         self.model.state_dict(),
-                        f"{base_dir}/models/gine_model_{self.dataset_name}_virtual_node_{self.virtual_node}_train_vn_eps_{self.train_vn_eps}_vn_eps_{self.vn_eps}.pt",
+                        f"{base_dir}/models/{model_name}",
                     )
 
     @torch.no_grad()
@@ -500,8 +501,11 @@ def run_multiple_experiments(
         results.append(run_results)
 
         # Save intermediate results after each run
-        df = pd.DataFrame(results)
+        df = pd.DataFrame([run_results])
+        # check if output file exists
         if os.path.exists(output_file):
+            with open(output_file, "a") as f:
+                f.write("\n")
             df.to_csv(output_file, index=False, mode="a", header=False)
         else:
             df.to_csv(output_file, index=False)

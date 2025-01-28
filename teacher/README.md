@@ -22,7 +22,7 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
 ### Setup
 
   - Pre-requisite
-    - Environment setup as described in the root README.
+    - `GML` Environment setup as described in the root [README.md](../README.md).
 
 1. Clone the GraphGPS repository 
     ```bash
@@ -65,7 +65,7 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
 |------|---------------|-----------|---------|---------------|-----------|---------|
 | 42   | 0.980          | 0.866      | 0.296   | 0.978          | 0.857      | 0.283    |
 | 43   | 0.981          | 0.866      | 0.296    | 0.979          | 0.860      | 0.282    |
-| **44**   | **0.981**          | **0.873**     | **0.307**    | **0.980**          | **0.870**      | **0.291**    |
+| **44***   | **0.981**          | **0.873**     | **0.307**    | **0.980**          | **0.870**      | **0.291**    |
 | Mean ± Std | 0.981 ± 0.001 | 0.868 ± 0.004 |  0.300 ± 0.006 | 0.979 ± 0.001 | 0.862 ± 0.007 | 0.285 ± 0.005 |
 - For embedding extraction, we used the best performing model with seed `44`.
 
@@ -90,4 +90,4 @@ We adapted the config from the [GraphGPS](https://github.com/rampasek/GraphGPS/b
     embeddings['ptr']: (num_graphs + 1) # Cumulative pointer of the nodes in each graph
     ```
 - These embeddings are used for downstream knowledge distillation tasks.
-- Our teacher knowledge on `OGBG-MolPCBA` dataset can be downloaded from [here](https://drive.google.com).
+- Our teacher knowledge on `OGBG-MolPCBA` dataset can be downloaded from [here](https://drive.google.com/file/d/1BHELWyQiAEWxcwOE0WsPrkK3N7xewSpW/view?usp=sharing).
