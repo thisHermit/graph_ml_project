@@ -85,6 +85,8 @@ We use the following default configuration and mention the change in the particu
 
 ### Results
 
+The following are the KD results
+
 | Model     | Valid AP | Test AP |
 | --------- | -------- | ------- |
 | MLP       | 0.1382   | 0.1412  |
