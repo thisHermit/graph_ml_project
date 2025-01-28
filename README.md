@@ -8,7 +8,7 @@ This repository contains the code and setup instructions for the project on Know
     - **MuGSI**: [Distilling GNNs with Multi-Granularity Structural Information for Graph Classification](https://dl.acm.org/doi/10.1145/3589334.3645542)
 - We used the `A100` and `H100` GPUs for training and inference.
 ### Project Structure
-- **`teacher/`**: Contains the instructions for producing the teacher knowledge on the OGBG-MolPCBA dataset. We used [`GraphGPS`](https://github.com/rampasek/GraphGPS) framework to build the teacher knowledge.
+- **`teacher/`**: Contains the instructions for producing the teacher knowledge on the `OGBG-MolPCBA` dataset. We used [`GraphGPS`](https://github.com/rampasek/GraphGPS) framework to build the teacher knowledge.
 - **`gakd/`**: Contains the code, setup instructions and results for the `GAKD` framework.
 - **`mugsi/`**: Contains the code, setup instructions and results for the `MuGSI` framework.
 
@@ -49,6 +49,7 @@ This repository contains the code and setup instructions for the project on Know
     source $HOME/conda/bin/activate gml
     ```
 
+- #### `MuGSI` Environment: (for `mugsi` experiments)
 
 
 

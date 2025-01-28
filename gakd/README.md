@@ -37,20 +37,20 @@ Adversarial Knowledge Distillation](https://arxiv.org/pdf/2205.11678). Basic ide
 - Our training results for `With Virtual Node Aggregation (Parameters: 12585067)` experiment are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
-    | 42  | 0.214042   | 0.214188   |
-    | 43  | 0.202022   | 0.197976   |
-    | 44  | 0.218998   | 0.213605   |
-    | 45  | 0.195727   | 0.187560   |
-    | 46  | 0.202787   | 0.192466   |
+    | 42  | 0.214   | 0.214   |
+    | 43  | 0.202   | 0.198   |
+    | 44  | 0.219   | 0.213   |
+    | 45  | 0.195   | 0.187   |
+    | 46  | 0.202   | 0.192  |
     | Mean ± Std | 0.206 ± 0.009 | 0.201 ± 0.010 |
 - `Without Virtual Node Aggregation (Parameters: 3717733)` experiment results are summarized in following table:
     | Seed | Valid AP   | Test AP    |
     |-----|------------|------------|
-    | 42  | 0.207008   | 0.205083   |
-    | 43  | 0.210528   | 0.203846   |
-    | 44  | 0.209418   | 0.206442   |
-    | 45  | 0.201207   | 0.202174   |
-    | **46**  | **0.208143**   | **0.206649**   |
+    | 42  | 0.207   | 0.205   |
+    | 43  | 0.210   | 0.203   |
+    | 44  | 0.209   | 0.206   |
+    | 45  | 0.201   | 0.202   |
+    | **46*** | **0.208**   | **0.206**   |
     | **Mean ± Std** | **0.207 ± 0.003** | **0.205 ± 0.002** |
 - We can see that the `Virtual Node Aggregation` does not improve the performance of the student model on average.
 - On the basis of average performance, we selected the models without the `Virtual Node Aggregation` as the baseline model. 
@@ -84,7 +84,7 @@ We have some notable implementation differences compared to the original impleme
     | Seed | Epochs | Valid AP   | Test AP    | Training Time |
     |-----|------------|------------|------------|------------|
     | 42  | 50 | 0.213   | 0.2131   | ≈13 hours |
-    | **42**  | **100** | **0.207**   | **0.205**   | **≈26 hours** |
+    | **42***  | **100** | **0.207**   | **0.205**   | **≈26 hours** |
 - We can see that the performance of the student model on `Test AP` is comparitively far better with `100` epochs as compared to student baseline. This applies that the student model is able to learn more from the teacher model.
 - Under the `50` epochs, the performance gain is little but still better than student baseline.
 - This reflects that we need more or equal epochs as of student baseline to get far better performance. With less epochs, we still can beat the baseline performance by small margin.
