@@ -2,3 +2,6 @@ __pycache__/
 dataset/
 *.pt
 .ipynb_checkpoints/
+lightning_logs/
+logs/
+mugsi/dataset
