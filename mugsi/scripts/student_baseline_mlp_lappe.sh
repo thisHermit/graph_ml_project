@@ -24,6 +24,4 @@ echo "==========================================="
 
 export PYTHONUNBUFFERED=TRUE
 cd /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/mugsi
-# python student_baseline.py  --model_name MLP  --max_epochs 30 --batch_size 256 --lr 1e-3 --weight_decay 1e-6 --pooling_method sum
-python train_kd.py
-
+python student_baseline.py  --model_name MLP  --use_lappe --max_epochs 30 --batch_size 256 --lr 1e-3 --weight_decay 1e-6 --pooling_method sum

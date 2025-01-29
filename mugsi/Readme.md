@@ -42,13 +42,13 @@ We use the following default configuration and mention the change in the particu
 - The results are summarized in following table:
   | Run | Valid AP | Test AP |
   |-----|------------|------------|
-  | Baseline | 0.1382 | 0.1412 |
-  | KD | 0.1382 | 0.1412 |
+  | Baseline | 0.261 | 0.2568 |
+  | KD | 0.074 | ? |
 - The baseline for the simplest MLP is reasonable high indicating that the molecular tasks are very determined by the types of nodes present.
 - This makes us infer that node features may play a more important role and node feature augmentation should provide better results.
 - To reproduce the results, submit the following command via `sbatch`:
   ```
-  sbatch scripts/<>
+  sbatch scripts/student_baseline_mlp.sh
   ```
 
 ### Experiment #2: MLP+LapPE
@@ -58,13 +58,12 @@ We use the following default configuration and mention the change in the particu
 - The results are summarized in following table:
   | Run | Valid AP | Test AP |
   |-----|------------|------------|
-  | Baseline | 0.1382 | 0.1412 |
-  | KD | 0.1382 | 0.1412 |
+  | Baseline | 0.262 | 0.2583 |
 - <what do we observe?>
 - <inference>
 - To reproduce the results, submit the following command via `sbatch`:
   ```
-  sbatch scripts/<>
+  sbatch scripts/student_baseline_mlp_lappe.sh
   ```
 
 ### Experiment #2: GA_MLP
@@ -74,48 +73,12 @@ We use the following default configuration and mention the change in the particu
 - The results are summarized in following table:
   | Run | Valid AP | Test AP |
   |-----|------------|------------|
-  | Baseline | 0.1382 | 0.1412 |
-  | KD | 0.1382 | 0.1412 |
+  | Baseline | 0.335 | 0.3218 |
 - <what do we observe?>
 - <inference>
 - To reproduce the results, submit the following command via `sbatch`:
   ```
-  sbatch scripts/<>
+  sbatch scripts/student_baseline_ga_mlp.sh
   ```
 
 ### Results
-
-The following are the KD results
-
-| Model     | Valid AP | Test AP |
-| --------- | -------- | ------- |
-| MLP       | 0.1382   | 0.1412  |
-| MLP+LapPE | 0.1382   | 0.1412  |
-| GA_MLP    | 0.1382   | 0.1412  |
-
-### Training Highlights
-
-We have some notable training differences compared to the original implementation:
-
-- We use `GINE` model as the student model.
-- Our teacher model is based on `GraphGPS` model configuration for `OGBG-MolPCBA` dataset.
-- Their implementation which uses `GCN` and `GIN` students has a very large `Embedding dimension (1024)`, whereas we use `400` for `GINE`.
-- Their batch size for `OGBG-MolPCBA` dataset is `512`, whereas we use `32` because of GPU memory constraints.
-- Their default discriminator update frequency (`K` in paper, `Section C.1`) is `1` (update on each iteration), whereas we use `5` (update every 5 iterations) for `OGBG-MolPCBA` dataset. They did not mention the reason for this choice and `K=5` performed better as compared to `K=1` for our initial experiments.
-- We execute `2 runs` for most experiments having `50` epochs. For an experiment having `100` epochs, we execute `1 run` due to time constraints. So for single run experiments, we cannot get an estimate of the `standard deviation` for the results.
-
-## Learnings
-
-- We are able to achieve better performance than student baseline with **full GAKD training**.
-- However, the performance gain is not as high as the paper suggests. This could be due to the differences in the implementation and training environment (**batch size, embedding dimension, epochs, etc.**).
-- **Representation Identifier** and **Logits Identifier** discriminators only achieve a small performance gain over student baseline when trained in isolation.
-- We need to train the discriminators less frequently to achieve better performance (`K > 1`).
-
-## Limitations and Future Work
-
-- We did not get an estimate of the `standard deviation` for some experiments due to time constraints. In future, we should run experiments with more runs and epochs to get a better estimate of **GAKD framework** performance.
-- We need to explore more on the **optimal discriminator update frequency (`K`)**.
-- We can try with **larger batch size** aligning with the original implementation.
-- We can also run experiments with `GINE with Virtual Node Aggregation` to see if adding virtual nodes helps in achieving better performance under **GAKD framework**.
-- Current training time is exceptionally high and debugging is required to find the bottleneck.
-- We can do **tSNE** plots of baseline, student and teacher embeddings and compare the **Silhouette scores** to see if the student embeddings are able to capture the teacher embeddings.
