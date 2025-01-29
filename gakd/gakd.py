@@ -17,7 +17,7 @@ import torch_geometric.nn as nng
 
 base_dir = os.getenv(
     "BASE_DIR",
-    f"/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GakD",
+    f"~/GakD",
 )
 if not os.path.exists(base_dir):
     os.makedirs(base_dir, exist_ok=True)

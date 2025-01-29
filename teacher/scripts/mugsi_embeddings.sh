@@ -5,14 +5,14 @@
 #SBATCH --cpus-per-task=64
 #SBATCH --ntasks=1
 #SBATCH --time=24:00:00
-#SBATCH --output=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/logs/gml_gps_teacher_embeddings.txt
+#SBATCH --output=~/logs/gml_gps_teacher_embeddings.txt
 #SBATCH --mail-user=muneeb.khan@stud.uni-goettingen.de
 #SBATCH --mail-type=BEGIN,END
 
 module load cuda/12.2.1
 
 source $HOME/conda/bin/activate gml
-export BASE_DIR=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS
+export BASE_DIR=~/GraphGPS
 export SEED=44
 echo "==========================================="
 echo "Job ID: $SLURM_JOB_ID"

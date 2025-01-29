@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=64
 #SBATCH --ntasks=1
 #SBATCH --time=10:00:00
-#SBATCH --output=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/mugsi/logs/gml_teacher_knowledge_pt_all.txt
+#SBATCH --output=~/mugsi/logs/gml_teacher_knowledge_pt_all.txt
 #SBATCH --mail-user=muneeb.khan@stud.uni-goettingen.de
 #SBATCH --mail-type=BEGIN,END
 
@@ -23,5 +23,5 @@ echo "Python version: $(python --version)"
 echo "==========================================="
 
 export PYTHONUNBUFFERED=TRUE
-cd /mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/mugsi
+cd ~/mugsi
 python student_baseline.py  --model_name MLP  --use_lappe --max_epochs 30 --batch_size 256 --lr 1e-3 --weight_decay 1e-6 --pooling_method sum

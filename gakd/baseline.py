@@ -26,7 +26,7 @@ print(f"Using device: {device}", flush=True)
 
 base_dir = os.getenv(
     "BASE_DIR",
-    f"/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GakD",
+    f"~/GakD",
 )
 
 if not os.path.exists(base_dir):

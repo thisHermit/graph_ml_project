@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=64
 #SBATCH --ntasks=1
 #SBATCH --time=1-23:55:00
-#SBATCH --output=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GakD/logs/gine-gakd-k5-wd0-drop0.5-epoch100.txt
+#SBATCH --output=~/GakD/logs/gine-gakd-k5-wd0-drop0.5-epoch100.txt
 #SBATCH --mail-user=muneeb.khan@stud.uni-goettingen.de
 #SBATCH --mail-type=BEGIN,END
 
@@ -13,8 +13,8 @@ module load cuda/12.2.1
 
 source $HOME/conda/bin/activate gml
 
-BASE_DIR=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GakD
-TEACHER_KNOWLEDGE_PATH=/mnt/lustre-grete/projects/LLMticketsummarization/muneeb/rand_dir/GraphGPS/teacher_results/teacher-knowledge.pt
+BASE_DIR=~/GakD
+TEACHER_KNOWLEDGE_PATH=~/GraphGPS/teacher_results/teacher-knowledge.pt
 
 echo "==========================================="
 echo "Job ID: $SLURM_JOB_ID"
